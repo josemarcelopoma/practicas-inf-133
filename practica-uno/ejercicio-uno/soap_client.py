@@ -1,24 +1,11 @@
 from zeep import Client
+client = Client("http://localhost:8000/")
 
-client = Client('http://localhost:8000')
-
-result = client.service.Saludar(nombre="Tatiana")
+result = client.service.Suma(a=3, b=3)
 print(result)
-
-resultado1 = client.service.sumardosnumero(num1 =1,num2 =1)
-print(resultado1)
-
-
-
-resultado = client.service.RestaDosNumeros(num1=1, num2=1)
-
-print(resultado)
-
-resultado = client.service.MultiplicaDosNumeros(num1=1, num2=1)
-
-print(resultado)
-
-
-resultado = client.service.DivideDosNumeros(num1=1, num2=0)
-
-print(resultado)
+result = client.service.Resta(a=3, b=3)
+print(result)
+result = client.service.Multiplicacion(a=3, b=3)
+print(result)
+result = client.service.Divicion(a=3, b=0)
+print(result)
