@@ -5,13 +5,13 @@ messages = []
 
 class MessageService:
     @staticmethod
-    def new_mensaje(id):
+    def nuevo_mensaje(id):
         return next(
             (message for message in messages if message["id"] == id),
             None,
         )
     @staticmethod
-    def encrypt_message(message):
+    def encriptar_mensaje(message):
         message_encrypted=""
         vec=['x','y','z']
         for letter in message:
@@ -20,18 +20,18 @@ class MessageService:
         return message_encrypted    
             
     @staticmethod
-    def add_message(data):
+    def añadir_mensaje(data):
         if not messages: data["id"] = 1
         else: data["id"] = max(messages, key=lambda x: x["id"])["id"]+1
         
-        data["content_encrypted"]= MessageService.encrypt_message(data["content"])
+        data["content_encrypted"]= MessageService.encriptar_mensaje(data["content"])
         messages.append(data)
         return messages
 
     @staticmethod
-    def update_message(id, data):
-        message = MessageService.new_mensaje(id)
-        data["content_encrypted"] = MessageService.encrypt_message(data["content"])
+    def Actualizar_mensaje(id, data):
+        message = MessageService.nuevo_mensaje(id)
+        data["content_encrypted"] = MessageService.encriptar_mensaje(data["content"])
         if message:
             messages.update(data)
             return messages
@@ -40,7 +40,7 @@ class MessageService:
 
     @staticmethod
     def eliminar_mensaje_id(id):
-        message = MessageService.new_mensaje(id)
+        message = MessageService.nuevo_mensaje(id)
         if message: 
             messages.remove(message)
             return message
@@ -65,7 +65,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             HTTPResponseHandler.handle_response(self,200, messages)
         elif self.path.startswith("/messages/"):
             id = int(self.path.split("/")[-1])
-            message = MessageService.new_mensaje(id)
+            message = MessageService.nuevo_mensaje(id)
             if message:
                 HTTPResponseHandler.handle_response(self, 200, [message])
             else:
@@ -79,7 +79,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == "/messages":
             data = self.read_data()
-            messages = MessageService.add_message(data)
+            messages = MessageService.añadir_mensaje(data)
             HTTPResponseHandler.handle_response(self, 201, messages)
         else:
             HTTPResponseHandler.handle_response(
@@ -90,7 +90,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
         if self.path.startswith("/messages/"):
             id = int(self.path.split("/")[-1])
             data = self.read_data()
-            messages = MessageService.update_message(id, data)
+            messages = MessageService.Actualizar_mensaje(id, data)
             if messages:
                 HTTPResponseHandler.handle_response(self, 200, messages)
             else:

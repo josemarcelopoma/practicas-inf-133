@@ -27,7 +27,7 @@ print(get_response.text)
 
 # Buscar mensajes por ID
 print("\n----mensajes por ID-----:")
-get_by_id_url = f"{url}/1"  # Reemplaza 1 con el ID del mensaje que deseas buscar
+get_by_id_url = f"{url}/2"  # Reemplaza 1 con el ID del mensaje que deseas buscar
 get_by_id_response = requests.request(method="GET", url=get_by_id_url)
 print(get_by_id_response.text)
 
@@ -35,14 +35,14 @@ print(get_by_id_response.text)
 print("\n----Actualizar un mensaje-----:")
 update_url = f"{url}/4"  # Reemplaza 1 con el ID del mensaje que deseas actualizar
 Actualizar_mensaje = {
-    "content": "Juancin"
+    "content": "Alberto"
 }
 put_response = requests.request(method="PUT", url=update_url, json=Actualizar_mensaje)
 print(put_response.text)
 
 # Eliminar un mensaje
 print("\n------Eliminar mensaje----:")
-delete_url = f"{url}/2"  # Reemplaza 1 con el ID del mensaje que deseas eliminar
+delete_url = f"{url}/1"  # Reemplaza 1 con el ID del mensaje que deseas eliminar
 delete_response = requests.request(method="DELETE", url=delete_url)
 print(delete_response.text)
 
